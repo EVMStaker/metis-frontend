@@ -1,4 +1,7 @@
+import BigNumber from 'bignumber.js'
+
 export type IfoStatus = 'coming_soon' | 'live' | 'finished'
+
 
 export interface Ifo {
   id: string
@@ -26,6 +29,7 @@ export enum QuoteToken {
   'BUSD' = 'BUSD',
   'TWT' = 'TWT',
   'UST' = 'UST',
+  'METIS' = 'METIS',
 }
 
 export enum PoolCategory {
@@ -84,3 +88,28 @@ export type Nft = {
   sortOrder: number
   bunnyId: number
 }
+
+export interface StakerConfig {
+  pid: number
+  name: string
+  type: string
+  percent: number
+  time: number
+}
+
+export interface StakerUserConfig {
+  dividends: BigNumber
+  // planDeposited: number
+  // referralBonus : BigNumber
+  // totalDeposit: BigNumber
+  // allowance: BigNumber
+  // plan?: {
+  //   percent?: number
+  //   amount?: number
+  //   profit?: number
+  //   start?: number
+  //   finish?: number
+
+  // }
+}
+

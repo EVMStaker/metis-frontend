@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { ResetCSS } from '@pancakeswap-libs/uikit'
 import BigNumber from 'bignumber.js'
-import { useFetchPublicData } from 'state/hooks'
+import { useFetchPublicData, useStakerUserData} from 'state/hooks'
 import GlobalStyle from './style/Global'
 import Menu from './components/Menu'
 import PageLoader from './components/PageLoader'
@@ -17,7 +17,7 @@ const Farms = lazy(() => import('./views/Farms'))
 // const Pools = lazy(() => import('./views/Pools'))
 // const Ifos = lazy(() => import('./views/Ifos'))
 const NotFound = lazy(() => import('./views/NotFound'))
-// const Nft = lazy(() => import('./views/Nft'))
+const Staker = lazy(() => import('./views/Staker'))
 
 // This config is required for number formating
 BigNumber.config({
@@ -34,6 +34,7 @@ const App: React.FC = () => {
   }, [account, connect])
 
   useFetchPublicData()
+  useStakerUserData()
 
   return (
     <Router>
@@ -48,8 +49,11 @@ const App: React.FC = () => {
             <Route path="/farms">
               <Farms />
             </Route>
-            <Route path="/nests">
+            {/* <Route path="/nests">
               <Farms tokenMode/>
+            </Route> */}
+            <Route path="/staker">
+              <Staker />
             </Route>
             {/* <Route path="/pools"> */}
             {/*  <Pools /> */}

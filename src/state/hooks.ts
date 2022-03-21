@@ -2,21 +2,25 @@ import BigNumber from 'bignumber.js'
 import { useEffect, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import useRefresh from 'hooks/useRefresh'
-import { fetchFarmsPublicDataAsync, fetchPoolsPublicDataAsync, fetchPoolsUserDataAsync } from './actions'
-import { State, Farm, Pool } from './types'
+import { fetchFarmsPublicDataAsync, fetchStakersPublicDataAsync, fetchPoolsPublicDataAsync, fetchPoolsUserDataAsync } from './actions'
+import { State, Farm, Pool, Staker, StakerUser} from './types'
 import { QuoteToken } from '../config/constants/types'
+import { fetchDividendsForClaim } from './stakerUser/fetchStakerUser'
+import { fetchUserDividendsForClaimDataAsync } from './stakerUser'
 
 const ZERO = new BigNumber(0)
 
 export const useFetchPublicData = () => {
   const dispatch = useDispatch()
   const { slowRefresh } = useRefresh()
+  // dispatch(fetchStakersPublicDataAsync())
   useEffect(() => {
-    dispatch(fetchFarmsPublicDataAsync())
+    dispatch(fetchStakersPublicDataAsync())
+    // dispatch(fetchUserDividendsForClaimDataAsync("0xb73E8cc008B4019b3AD5CA1e600235D405b20bA7"))
+    // dispatch(fetchFarmsPublicDataAsync())
     // dispatch(fetchPoolsPublicDataAsync())
   }, [dispatch, slowRefresh])
 }
-
 // Farms
 
 export const useFarms = (): Farm[] => {
@@ -104,4 +108,14 @@ export const useTotalValue = (): BigNumber => {
     }
   }
   return value;
+}
+
+export const useStakerData = (): Staker => {
+  const staker = useSelector((state: State) => state.stakers.data)
+  return staker
+}
+
+export const useStakerUserData = (): StakerUser => {
+  const stakerUser = useSelector((state: State) => state.stakerUser.data)
+  return stakerUser
 }

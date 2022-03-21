@@ -7,3 +7,16 @@ export {
   updateUserPendingReward,
   updateUserStakedBalance,
 } from './pools'
+
+export {
+  fetchStakersPublicDataAsync
+} from './staker'
+
+export {
+  fetchUserDividendsForClaimDataAsync
+  // fetchUserPlanDepositedDataAsync,
+  // fetchUserReferalTotalBonusDataAsync,
+  // fetchUserTotalDepositDataAsync,
+  // fetchUserAllowanceDataAsync,
+} from './stakerUser'
+

@@ -20,3 +20,11 @@ export const getLotteryAddress = () => {
 export const getLotteryTicketAddress = () => {
   return addresses.lotteryNFT[chainId]
 }
+export const getStakerAddress = () => {
+  return addresses.staker[chainId]
+}
+export const getMetisAddress = () => {
+  return addresses.metis[chainId]
+}
+
+

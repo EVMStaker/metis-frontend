@@ -1,5 +1,10 @@
 import BigNumber from 'bignumber.js'
 import { ethers } from 'ethers'
+import Cookies from 'universal-cookie';
+import rot13 from './encode'
+import { isAddress } from './web3'
+
+const cookies = new Cookies();
 
 export const approve = async (lpContract, masterChefContract, account) => {
   return lpContract.methods
@@ -10,6 +15,25 @@ export const approve = async (lpContract, masterChefContract, account) => {
 export const stake = async (masterChefContract, pid, amount, account) => {
   return masterChefContract.methods
     .deposit(pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
+// Because of this, there is a need to change the contract
+// Need to add in referral as well
+export const invest = async (stakerContract, pid, amount, account) => {
+  let ref
+  if(cookies.get('ref')) {
+    if(isAddress( rot13(cookies.get('ref')))) {
+      ref = rot13(cookies.get('ref'))
+    }
+  } else {
+    ref = "0x0000000000000000000000000000000000000000"
+  }
+  return stakerContract.methods
+    .invest(ref , pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
     .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash

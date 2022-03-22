@@ -2,7 +2,8 @@ import { configureStore } from '@reduxjs/toolkit'
 import farmsReducer from './farms'
 import poolsReducer from './pools'
 import stakersReducer from './staker'
-import stakerUserReducer from './stakerUser'
+import stakeruserReducer from './stakeruser'
+import statedPlanReducer from './stakedPlans'
 
 export default configureStore({
   devTools: process.env.NODE_ENV !== 'production',
@@ -10,6 +11,7 @@ export default configureStore({
     farms: farmsReducer,
     pools: poolsReducer,
     stakers: stakersReducer,
-    stakerUser: stakerUserReducer
+    stakeruser: stakeruserReducer,
+    stakedPlan: statedPlanReducer
   },
 })

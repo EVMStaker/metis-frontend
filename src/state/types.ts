@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { FarmConfig, PoolConfig, StakerConfig, StakerUserConfig } from 'config/constants/types'
+import { FarmConfig, PoolConfig, StakerConfig, StakerUserConfig, StakedPlansConfig} from 'config/constants/types'
 
 export interface Farm extends FarmConfig {
   tokenAmount?: BigNumber
@@ -30,22 +30,6 @@ export interface Staker extends StakerConfig {
   // }
 }
 
-// export interface StakerUser {
-//   dividendsForClaim?: BigNumber
-//   totalDeposit: BigNumber
-//   allowance: BigNumber
-//   referralBonus : BigNumber
-//   planDeposited: number
-
-//   // plan?: number
-//   // percent?: number
-//   // amount?: number
-//   // profit?: number
-//   // start?: number
-//   // finish?: number
-// }
-
-
 
 export interface Pool extends PoolConfig {
   totalStaked?: BigNumber
@@ -62,6 +46,8 @@ export interface Pool extends PoolConfig {
 
 export type StakerUser = StakerUserConfig
 
+export type StakedPlan = StakedPlansConfig
+
 // Slices states
 
 export interface FarmsState {
@@ -76,8 +62,12 @@ export interface StakersState {
   data: Staker[]
 }
 
-export interface StakersUserState {
+export interface StakerUserState {
   data: StakerUser
+}
+
+export interface StakedPlanState {
+  data: StakedPlan[]
 }
 
 // Global state
@@ -86,5 +76,6 @@ export interface State {
   farms: FarmsState
   pools: PoolsState
   stakers: StakersState
-  stakerUser: StakersUserState
+  stakeruser: StakerUserState
+  stakedPlan: StakedPlanState
 }

@@ -3,11 +3,11 @@ import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
 import { Button, Flex, Heading, IconButton, AddIcon, MinusIcon, useModal } from '@pancakeswap-libs/uikit'
 import useI18n from 'hooks/useI18n'
-import useInvest from 'hooks/useStake'
-import useUnstake from 'hooks/useUnstake'
+import { useInvest } from 'hooks/useStaker'
 import { getBalanceNumber } from 'utils/formatBalance'
 import DepositModal from '../DepositModal'
 import WithdrawModal from '../WithdrawModal'
+import Countdown, { zeroPad } from 'react-countdown'
 
 interface FarmCardActionsProps {
   tokenBalance?: BigNumber

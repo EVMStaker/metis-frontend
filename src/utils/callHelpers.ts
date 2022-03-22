@@ -67,6 +67,16 @@ export const unstake = async (masterChefContract, pid, amount, account) => {
     })
 }
 
+// Call Functions for Withdrawing Dividends or the Main Captialisation
+export const withdraw = async (stakerContract, account) => {
+  return stakerContract.methods
+    .withdraw()
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      return tx.transactionHash
+    })
+}
+
 export const sousUnstake = async (sousChefContract, amount, account) => {
   // shit code: hard fix for old CTK and BLK
   if (sousChefContract.options.address === '0x3B9B74f48E89Ebd8b45a53444327013a2308A9BC') {

@@ -10,7 +10,7 @@ import {
   fetchTotalDeposit,
   fetchUserAllowance,
 } from './fetchStakerUser'
-import { StakersState, Staker, StakerUser, StakersUserState} from '../types'
+import { StakersState, Staker, StakerUser, StakerUserState} from '../types'
 
 const initialState: StakersState = { data: [...stakerConfig] }
 
@@ -27,14 +27,9 @@ export const stakersSlice = createSlice({
         const liveStakerData = liveStakersData.find((s) => s.pid === staker.pid)
         return { ...staker, ...liveStakerData }
       })
+
     },
 
-    // setUserDividendsForClaim: (state, action) => {
-    //   state.data = {
-    //     ...state.data,
-    //     dividends: action.payload,
-    //   }
-    // },
     // setUserPlanDeposited: (state, action) => {
     //   state.data = {
     //     ...state.data,

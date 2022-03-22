@@ -13,10 +13,16 @@ export {
 } from './staker'
 
 export {
-  fetchUserDividendsForClaimDataAsync
-  // fetchUserPlanDepositedDataAsync,
-  // fetchUserReferalTotalBonusDataAsync,
-  // fetchUserTotalDepositDataAsync,
-  // fetchUserAllowanceDataAsync,
-} from './stakerUser'
+  fetchUserDividendsForClaimDataAsync,
+  fetchUserPlanDepositedDataAsync,
+  fetchUserReferalTotalBonusDataAsync,
+  fetchUserTotalDepositDataAsync,
+  fetchUserAllowanceDataAsync,
+  fetchUserStakedDataAsync
+} from './stakeruser'
+
+export {
+  fetchStakedPlansDataAsync
+} from './stakedPlans'
+
 

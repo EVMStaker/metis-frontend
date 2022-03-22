@@ -1,19 +1,21 @@
 import { StakerUserConfig } from './types'
 
-const stakeUser: StakerUserConfig = {
+const stakeruser: StakerUserConfig = {
+    
     dividends: null,
-    // planDeposited: null,
-    // referralBonus : null,
-    // totalDeposit: null,
-    // allowance: null,
-    // plan: {
-    //   percent: null,
-    //   amount: null,
-    //   profit: null,
-    //   start: null,
-    //   finish: null
+    planDeposited: null,
+    referralBonus : null,
+    totalDeposit: null,
+    allowance: null,
+    stakedData: {
+      plan: null,
+      percent: null,
+      amount: null,
+      profit: null,
+      start: null,
+      finish: null
   
-    // }
+    }
 }
 
-export default stakeUser
+export default stakeruser

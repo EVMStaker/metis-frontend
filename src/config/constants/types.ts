@@ -99,17 +99,28 @@ export interface StakerConfig {
 
 export interface StakerUserConfig {
   dividends: BigNumber
-  // planDeposited: number
-  // referralBonus : BigNumber
-  // totalDeposit: BigNumber
-  // allowance: BigNumber
-  // plan?: {
-  //   percent?: number
-  //   amount?: number
-  //   profit?: number
-  //   start?: number
-  //   finish?: number
+  planDeposited: number
+  referralBonus : BigNumber
+  totalDeposit: BigNumber
+  allowance: BigNumber
+  stakedData?: {
+    plan?: number
+    percent?: number
+    amount?: BigNumber
+    profit?: BigNumber
+    start?: number
+    finish?: number
 
-  // }
+  }
+}
+
+export interface StakedPlansConfig {
+  plan?: number
+  percent?: number
+  amount?: BigNumber
+  profit?: BigNumber
+  start?: number
+  finish?: number
+
 }
 

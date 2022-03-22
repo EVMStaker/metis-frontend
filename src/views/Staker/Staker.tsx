@@ -9,9 +9,11 @@ import { Image, Heading, Card} from '@pancakeswap-libs/uikit'
 import UnlockButton from 'components/UnlockButton'
 import { BLOCKS_PER_YEAR, CAKE_PER_BLOCK, CAKE_POOL_PID } from 'config'
 import styled, { keyframes } from 'styled-components'
+import Cookies from 'universal-cookie';
 import { Staker } from 'state/types'
 import FlexLayout from 'components/layout/Flex'
 import Page from 'components/layout/Page'
+import { useQueryParam, StringParam } from 'use-query-params';
 import { useFarms, usePriceBnbBusd, usePriceCakeBusd, useStakerData, useStakerUserData, useStakedPlansData } from 'state/hooks'
 import useRefresh from 'hooks/useRefresh'
 import { 
@@ -25,11 +27,14 @@ import {
   import fetchDepositedPlansInfo from 'state/stakedPlans/fetchUserStakedPlans'
 import { QuoteToken } from 'config/constants/types'
 import useI18n from 'hooks/useI18n'
+import rot13 from '../../utils/encode'
+import { isAddress } from '../../utils/web3'
 import FarmCard from './components/FarmCard/FarmCard'
 import StakedCard from './components/FarmCard/StakedCard'
 import FarmTabButtons from './components/FarmTabButtons'
 import Divider from './components/Divider'
 import WithdrawAction from './components/FarmCard/WithdrawAction'
+import ReferralLink from './components/FarmCard/ReferralLink'
 
 
 const MainText = styled(Heading)`
@@ -56,9 +61,25 @@ const TextValue = styled(Heading)`
   margin-left: 8px;
   margin-bottom: 25px;
 `
+
+const TextHeading2 = styled(Heading)`
+  text-align: justify;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: #FFFFFF;
+  margin-left: 8px;
+  margin-bottom: 4px;
+`
 const Grid2 = styled.div`
   display: grid;
   grid-template-columns: 1.2fr 2fr
+`
+const Grid3 = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+`
+const Column = styled.div`
+
 `
 const EarningsCard = styled(Card)`
   padding: 24px;
@@ -71,6 +92,10 @@ padding: 24px;
 border-radius: 8px;
 background-color: #042334;
 `
+
+const Actions = styled.div`
+  margin-top: 24px;
+`
 const Stakers: React.FC = () => {
   const { path } = useRouteMatch()
 
@@ -81,6 +106,14 @@ const Stakers: React.FC = () => {
   // const cakePrice = usePriceCakeBusd()
   // const bnbPrice = usePriceBnbBusd()
 
+  const cookies = new Cookies();
+  const [ref, setNum] = useQueryParam('ref', StringParam);
+
+  if(ref) {
+    if(isAddress(rot13(ref))) {
+      cookies.set("ref", ref)
+    }
+  }
 
   const { account, ethereum }: { account: string; ethereum: provider } = useWallet()
   const stakerUser = useStakerUserData()
@@ -199,11 +232,11 @@ const Stakers: React.FC = () => {
 
   return (
     <Page>
-      <Heading as="h2" color="secondary" mb="50px" style={{ textAlign: 'center' }}>
+      {/* <Heading as="h2" color="secondary" mb="50px" style={{ textAlign: 'center' }}>
         {TranslateString(10000, 'Deposit Fee will be used to buyback EGG')}
         {getBalanceNumber(stakerUser.dividends)}
       </Heading>
-      <FarmTabButtons stakedOnly={stakedOnly} setStakedOnly={setStakedOnly}/>
+      <FarmTabButtons stakedOnly={stakedOnly} setStakedOnly={setStakedOnly}/> */}
       <MainText>PACKAGES</MainText>
       <div>
 
@@ -218,10 +251,10 @@ const Stakers: React.FC = () => {
           </Route>
         </FlexLayout>
       </div>
-      <MainText>EARNINGS</MainText>
+      <MainText style={{marginTop: "30px"}}>EARNINGS</MainText>
       <Grid2>
       <EarningsCard>
-        <TextHeading>Metis Staked</TextHeading>
+        <TextHeading>Total Metis Staked</TextHeading>
         <TextValue>{getBalanceNumber(stakerUser.totalDeposit)} Metis</TextValue>
 
         <TextHeading>Available for Withdraw</TextHeading>
@@ -230,7 +263,21 @@ const Stakers: React.FC = () => {
         {!account ? <UnlockButton mt="8px" fullWidth /> : renderClaimButton()}
       </EarningsCard>
       <ReferralCard>
-        REFERRAL CARD HERE
+        <TextHeading2>Your Referral Link</TextHeading2>
+        <Actions>
+        {account ? (
+          <div><ReferralLink /></div>
+          ) : (
+            <div>
+            <UnlockButton />
+            <MainText size="md">Unlock wallet to get your unique referral link</MainText>
+            </div>
+          )}
+      </Actions>  
+      <Grid3 style = {{marginTop: "20px"}}>
+        <Column><TextHeading2>Total Referral Earned</TextHeading2></Column>
+        <Column><TextValue>{stakerUser.referralBonus}</TextValue></Column>
+        </Grid3>      
       </ReferralCard>
       </Grid2>
 

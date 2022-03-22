@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { ResetCSS } from '@pancakeswap-libs/uikit'
 import BigNumber from 'bignumber.js'
+import { QueryParamProvider } from 'use-query-params';
 import { useFetchPublicData, useStakerUserData} from 'state/hooks'
 import GlobalStyle from './style/Global'
 import Menu from './components/Menu'
@@ -38,6 +39,7 @@ const App: React.FC = () => {
 
   return (
     <Router>
+      <QueryParamProvider ReactRouterRoute={Route}>
       <ResetCSS />
       <GlobalStyle />
       <Menu>
@@ -80,6 +82,7 @@ const App: React.FC = () => {
         </Suspense>
       </Menu>
       <NftGlobalNotification />
+      </QueryParamProvider>
     </Router>
   )
 }

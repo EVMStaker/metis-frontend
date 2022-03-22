@@ -7,7 +7,7 @@ import { useInvest } from 'hooks/useStaker'
 import { getBalanceNumber } from 'utils/formatBalance'
 import DepositModal from '../DepositModal'
 import WithdrawModal from '../WithdrawModal'
-import Countdown, { zeroPad } from 'react-countdown'
+
 
 interface FarmCardActionsProps {
   tokenBalance?: BigNumber

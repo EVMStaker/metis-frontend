@@ -6,6 +6,7 @@ import { communityFarms } from 'config/constants'
 import { Staker, StakedPlan } from 'state/types'
 import { provider } from 'web3-core'
 import useI18n from 'hooks/useI18n'
+import Countdown, { zeroPad } from 'react-countdown'
 import ExpandableSectionButton from 'components/ExpandableSectionButton'
 import { QuoteToken } from 'config/constants/types'
 import NewTokenInput from 'components/NewTokenInput'
@@ -113,6 +114,12 @@ const MainText = styled(Heading)`
   font-size: 1.25rem;
   color: #FFFFFF;
 `
+const MainText2 = styled(Heading)`
+  text-align: justify;
+  justify-content: space-between;
+  font-size: 1.6rem;
+  color: #052434;
+`
 const SubText = styled(Heading)`
   text-align: justify;
   justify-content: space-between;
@@ -184,6 +191,7 @@ const StakedCard: React.FC<StakedCardProps> = ({ staker, currentPercentage, ethe
   let planName: string;
   let planType: string;
   let totalReturn
+  let daysLeft
 
   // Not the Best of Doing it but I really very laze liao
   if (staker.plan !== null ) {
@@ -206,8 +214,13 @@ const StakedCard: React.FC<StakedCardProps> = ({ staker, currentPercentage, ethe
       planName = "PLANTNUM" 
       planType = "LOCKED"
     }
-
+    // Calculate Total Return 
     totalReturn = new BigNumber(parseInt(staker.amount.toString())+ parseInt(staker.profit.toString()))
+
+    // Calculate Time Left 
+    daysLeft = parseInt(staker.finish.toString()) - Math.floor(Date.now() / 1000) 
+    daysLeft = Math.floor(daysLeft/86400)
+    console.log(daysLeft)
   }
 
   
@@ -229,7 +242,7 @@ const StakedCard: React.FC<StakedCardProps> = ({ staker, currentPercentage, ethe
       <CicleWrapper>
       <Cicle>
       <DoubleRowCenter>
-        <TimeTextHeading>{staker.plan}</TimeTextHeading>
+        <TimeTextHeading>{daysLeft}</TimeTextHeading>
         <TimeTextSub>days</TimeTextSub>
         </DoubleRowCenter>
       </Cicle>
@@ -237,12 +250,12 @@ const StakedCard: React.FC<StakedCardProps> = ({ staker, currentPercentage, ethe
 
       <FlexContainer style={{marginBottom: "0px"}}>
         <DoubleRow>
-        <SubText>Deposit</SubText>
-        <MainText>{getBalanceNumber(staker.amount)}%</MainText>
+        <SubText>METIS STAKED</SubText>
+        <MainText2>{getBalanceNumber(staker.amount)} </MainText2>
         </DoubleRow>
         <DoubleRow>
-        <SubText>Total Return</SubText>
-        <MainText style = {{textAlign:"right"}}>{getBalanceNumber(totalReturn)}%</MainText>
+        <SubText style = {{textAlign:"right"}}>TOTAL RETURN</SubText>
+        <MainText2 style = {{textAlign:"right"}}>{getBalanceNumber(totalReturn)}</MainText2>
         </DoubleRow>
       </FlexContainer>
     </FCard>

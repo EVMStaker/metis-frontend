@@ -167,22 +167,25 @@ interface FarmCardProps {
 const FarmCard: React.FC<FarmCardProps> = ({ staker, currentPercentage, ethereum, account }) => {
   const TranslateString = useI18n()
 
-  const parsedDailyPercentage = parseFloat(staker.currentPercent) / 10 
-  const parsedTotalROI = parseFloat(staker.totalROI) / 10 
+  const parsedDailyPercentage = parseFloat(staker.currentPercent) / 10
+
+
+  let parsedTotalROI 
+  if (staker.pid >= 3 ) {
+    parsedTotalROI = ((((1 + parsedDailyPercentage / 100) ** staker.time  ) * 100 ) - 100).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2})
+  } else {
+    parsedTotalROI = parseFloat(staker.totalROI) / 10 
+  }
+  // const parsedTotalROI = parseFloat(staker.totalROI) / 10 
 
   const [val, setVal] = useState('')
+
   const handleChange = useCallback(
     (e: React.FormEvent<HTMLInputElement>) => {
       setVal(e.currentTarget.value)
     },
     [setVal],
   )
-
-  
-  // const isCommunityFarm = communityFarms.includes(farm.tokenSymbol)
-  // We assume the token name is coin pair + lp e.g. CAKE-BNB LP, LINK-BNB LP,
-  // NAR-CAKE LP. The images should be cake-bnb.svg, link-bnb.svg, nar-cake.svg
-  // const farmImage = farm.lpSymbol.split(' ')[0].toLocaleLowerCase()
 
   return (
     <FCard>
@@ -228,61 +231,6 @@ const FarmCard: React.FC<FarmCardProps> = ({ staker, currentPercentage, ethereum
     
  
       <CardActionsContainer staker={staker} ethereum={ethereum} account={account} />
-      
-
-      {/* {!removed && (
-        <Flex justifyContent='space-between' alignItems='center'>
-          <Text>{TranslateString(352, 'APR')}:</Text>
-          <Text bold style={{ display: 'flex', alignItems: 'center' }}>
-            {farm.apy ? (
-              <>
-                <ApyButton
-                  lpLabel={lpLabel}
-                  quoteTokenAdresses={quoteTokenAdresses}
-                  quoteTokenSymbol={quoteTokenSymbol}
-                  tokenAddresses={tokenAddresses}
-                  cakePrice={cakePrice}
-                  apy={farm.apy}
-                />
-                {farmAPY}%
-              </>
-            ) : (
-              <Skeleton height={24} width={80} />
-            )}
-          </Text>
-        </Flex>
-      )}
-      <Flex justifyContent='space-between'>
-        <Text>{TranslateString(318, 'Earn')}:</Text>
-        <Text bold>{earnLabel}</Text>
-      </Flex>
-      <Flex justifyContent='space-between'>
-        <Text style={{ fontSize: '24px' }}>{TranslateString(10001, 'Deposit Fee')}:</Text>
-        <Text bold style={{ fontSize: '24px' }}>{(farm.depositFeeBP / 100)}%</Text>
-      </Flex>
-      <CardActionsContainer farm={farm} ethereum={ethereum} account={account} />
-      <Divider />
-      <ExpandableSectionButton
-        onClick={() => setShowExpandableSection(!showExpandableSection)}
-        expanded={showExpandableSection}
-      />
-      <ExpandingWrapper expanded={showExpandableSection}>
-        <DetailsSection
-          removed={removed}
-          isTokenOnly={farm.isTokenOnly}
-          bscScanAddress={
-            farm.isTokenOnly ?
-              `https://bscscan.com/token/${farm.tokenAddresses[process.env.REACT_APP_CHAIN_ID]}`
-              :
-              `https://bscscan.com/token/${farm.lpAddresses[process.env.REACT_APP_CHAIN_ID]}`
-          }
-          totalValueFormated={totalValueFormated}
-          lpLabel={lpLabel}
-          quoteTokenAdresses={quoteTokenAdresses}
-          quoteTokenSymbol={quoteTokenSymbol}
-          tokenAddresses={tokenAddresses}
-        />
-      </ExpandingWrapper> */}
     </FCard>
   )
 }

@@ -103,6 +103,8 @@ export interface StakerUserConfig {
   referralBonus : BigNumber
   totalDeposit: BigNumber
   allowance: BigNumber
+  totalStaked: BigNumber
+  contractBalance: BigNumber
   stakedData?: {
     plan?: number
     percent?: number

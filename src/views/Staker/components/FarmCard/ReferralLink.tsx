@@ -7,8 +7,8 @@ import rot13 from '../../../../utils/encode'
 
 const StyleInput = styled(Input)`
     margin-top: 10px;
-    color: #000000;
-    font-color: #000000;
+    color: #FFFFFF;
+    font-color: #FFFFFF;
 `
 
 const ReferralLink = () => {
@@ -35,7 +35,7 @@ const ReferralLink = () => {
         <div>
             <StyleInput type="text" scale="md" value={`https:/metisstaker.com/?ref=${rot13(account)}`} readOnly />
             <CopyToClipboard text={`https://metisstaker.com/?ref=${rot13(account)}`} onCopy={() => { handleClick() }}>
-                <Button variant="primary" mt="8px">Copy</Button>
+                <Button variant="primary" style= {{border:"solid 3px #FFFFFF", marginLeft: "14px"}}mt="8px">Copy</Button>
             </CopyToClipboard>
             <ToastContainer toasts={toasts} onRemove={handleRemove} />
         </div>

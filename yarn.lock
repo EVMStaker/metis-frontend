@@ -1837,7 +1837,7 @@
 
 "@pancakeswap-libs/uikit@metisstaker/metis-uikit":
   version "0.10.2"
-  resolved "https://codeload.github.com/metisstaker/metis-uikit/tar.gz/4a665ca7b735e1fc9e22191b98912308a6001bbd"
+  resolved "https://codeload.github.com/metisstaker/metis-uikit/tar.gz/24dac0cdf6d9df467f3ad62aa437e0afe39fcc1c"
   dependencies:
     "@types/lodash" "^4.14.162"
     "@types/styled-system" "^5.1.10"

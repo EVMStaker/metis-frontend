@@ -8,7 +8,9 @@ import {
   fetchReferalTotalBonus,
   fetchTotalDeposit, 
   fetchUserAllowance,
-  fetchDepositedPlansInfo
+  fetchDepositedPlansInfo, 
+  fetchTotalStaked,
+  fetchContractBalance,
  } from './fetchUserStake'
 
 
@@ -19,7 +21,6 @@ export const StakerUserSlice = createSlice({
   initialState,
   reducers: {
     
-
     setUserDividendsForClaim: (state, action) => {
       state.data = {
         ...state.data,
@@ -51,6 +52,19 @@ export const StakerUserSlice = createSlice({
         allowance: action.payload,
       }
     },
+    setTotalStaked: (state, action) => {
+      console.log(action.payload)
+      state.data = {
+        ...state.data,
+        totalStaked: action.payload,
+      }
+    },
+    setContractBalance: (state, action) => {
+      state.data = {
+        ...state.data,
+        contractBalance: action.payload,
+      }
+    },
     // setStakerUserData: (state, action) => {
     //   const { arrayOfUserDataObjects } = action.payload
     //   arrayOfUserDataObjects.forEach((userDataEl) => {
@@ -63,7 +77,7 @@ export const StakerUserSlice = createSlice({
 
 
 // Actions
-export const { setUserDividendsForClaim, setUserPlanDeposited, setUserReferalTotalBonus, setUserTotalDeposit, setUserAllowance } = StakerUserSlice.actions
+export const { setUserDividendsForClaim,  setUserPlanDeposited, setUserReferalTotalBonus, setUserTotalDeposit, setUserAllowance, setTotalStaked, setContractBalance} = StakerUserSlice.actions
 // export const { setUserDividendsForClaim } = StakerUserSlice.actions
 
 
@@ -93,10 +107,15 @@ export const fetchUserAllowanceDataAsync = (account) => async (dispatch) => {
   dispatch(setUserAllowance(data))
 }
 
-// export const fetchUserDespositInfoDataAsync = (account) => async (dispatch) => {
-//   const data = await fetchDepositedPlansInfo(account)
-//   return data
-// }
+export const fetchTotalStakedDataAsync = () => async (dispatch) => {
+  const data = await fetchTotalStaked()
+  dispatch(setTotalStaked(data))
+}
+
+export const fetchContractBalanceDataAsync = () => async (dispatch) => {
+  const data = await fetchContractBalance()
+  dispatch(setContractBalance(data))
+}
 
 export const fetchUserStakedDataAsync = (account) => async (dispatch) => {
   const data = await fetchPlanDeposited(account)

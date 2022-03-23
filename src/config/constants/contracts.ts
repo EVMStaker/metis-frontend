@@ -1,6 +1,6 @@
 export default {
   cake: {
-    56: '0xF952Fc3ca7325Cc27D15885d37117676d25BfdA6',
+    56: '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
     97: '',
   },
   masterChef: {
@@ -8,8 +8,8 @@ export default {
     97: '',
   },
   wbnb: {
-    56: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
-    97: '0xae13d989dac2f0debff460ac112a837c89baa7cd',
+    56: '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
+    97: '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
   },
   lottery: {
     56: '',
@@ -32,7 +32,7 @@ export default {
     97: '0xb7b857e3B03C9d41e02865eF21F3d01b2B255260',
   },
   metis: {
-    56: '0xb7b857e3B03C9d41e02865eF21F3d01b2B255260',
-    97: '0xae13d989dac2f0debff460ac112a837c89baa7cd',
+    56: '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
+    97: '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
   },
 }

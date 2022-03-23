@@ -74,6 +74,23 @@ export const fetchDepositedPlansInfo = async (account, pid) => {
   console.log("hi")
   return allPlans
 }
+// Fetch the User Deposit Info for Each that they are
+export const fetchTotalStaked = async () => {
+  const totalStaked = await multicall(stakerABI, [
+    {
+      address: getStakerAddress(),
+      name: 'totalStaked',
+    }])
+
+  return new BigNumber(totalStaked)
+}
+
+export const fetchContractBalance = async () => {
+  const rawBalance = await stakerContract.methods.getContractBalance().call()
+  const parsedBalance = new BigNumber(rawBalance)
+  return parsedBalance
+}
+
 export const fetchDepositedPlansInfo2 = async (account, pid) => {
   
   // const length = await stakerContract.methods.getUserAmountOfDeposits(account).call()
@@ -89,6 +106,7 @@ export const fetchDepositedPlansInfo2 = async (account, pid) => {
   const plans = stakerContract.methods.getUserDepositInfo(account, pid).call()
   console.log(plans)
 }
+fetchTotalStaked()
 
 // fetchDepositedPlansInfo2("0xb73E8cc008B4019b3AD5CA1e600235D405b20bA7", 1)
 

@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { provider } from 'web3-core'
-import { Image, Heading, Card} from '@pancakeswap-libs/uikit'
+import { Image, Heading, Card, Button} from '@pancakeswap-libs/uikit'
 import UnlockButton from 'components/UnlockButton'
 import { BLOCKS_PER_YEAR, CAKE_PER_BLOCK, CAKE_POOL_PID } from 'config'
 import styled, { keyframes } from 'styled-components'
@@ -23,10 +23,17 @@ import {
   fetchUserReferalTotalBonusDataAsync, 
   fetchUserTotalDepositDataAsync, 
   fetchUserAllowanceDataAsync, 
-  fetchStakedPlansDataAsync} from 'state/actions'
-  import fetchDepositedPlansInfo from 'state/stakedPlans/fetchUserStakedPlans'
+  fetchStakedPlansDataAsync,
+  fetchTotalStakedDataAsync,
+  fetchContractBalanceDataAsync} from 'state/actions'
+import {fetchTotalStaked} from 'state/stakeruser/fetchUserStake'
 import { QuoteToken } from 'config/constants/types'
 import useI18n from 'hooks/useI18n'
+import stakeruser from 'config/constants/stakerUser'
+import { AbiItem } from 'web3-utils'
+import usdcABI from 'config/abi/usdc.json'
+import { getWeb3 } from 'utils/web3'
+import { getMetisAddress } from '../../utils/addressHelpers'
 import rot13 from '../../utils/encode'
 import { isAddress } from '../../utils/web3'
 import FarmCard from './components/FarmCard/FarmCard'
@@ -35,6 +42,7 @@ import FarmTabButtons from './components/FarmTabButtons'
 import Divider from './components/Divider'
 import WithdrawAction from './components/FarmCard/WithdrawAction'
 import ReferralLink from './components/FarmCard/ReferralLink'
+
 
 
 const MainText = styled(Heading)`
@@ -70,16 +78,42 @@ const TextHeading2 = styled(Heading)`
   margin-left: 8px;
   margin-bottom: 4px;
 `
+
+const TextHeading3 = styled(Heading)`
+  text-align: left;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #FFFFFF;
+  margin-left: 8px;
+  margin-bottom: 8px;
+`
 const Grid2 = styled.div`
   display: grid;
-  grid-template-columns: 1.2fr 2fr
+  grid-template-columns: 1.1fr 2fr
 `
 const Grid3 = styled.div`
   display: grid;
+  grid-template-columns: 1fr 1fr 1.3fr;
+`
+
+const NavGrid5 = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  align-content: center;
+  margin-bottom: 40px;
+  text-align: center;
+`
+
+const TopGrid3 = styled.div`
+  display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 `
+const TopGrid2 = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+`
 const Column = styled.div`
-
+margin-right: 10px;
 `
 const EarningsCard = styled(Card)`
   padding: 24px;
@@ -87,10 +121,29 @@ const EarningsCard = styled(Card)`
   margin-right: 20px;
   margin-left: 8px;
 `
+const GlobalCard = styled(Card)`
+  padding: 24px;
+  border-radius: 8px;
+  margin-right: 20px;
+  margin-left: 8px;
+  background: #09d4c7;
+`
+
 const ReferralCard = styled(Card)`
 padding: 24px;
 border-radius: 8px;
 background-color: #042334;
+`
+
+const NavButton = styled(Button)`
+border-radius: 0px;
+background-color: #232A34;
+height: 40px;
+border-radius: 4px;
+
+  &:hover:not(:disabled):not(.button--disabled):not(:active)  {
+  background-color: #09d4c7;
+}
 `
 
 const Actions = styled.div`
@@ -118,13 +171,14 @@ const Stakers: React.FC = () => {
   const { account, ethereum }: { account: string; ethereum: provider } = useWallet()
   const stakerUser = useStakerUserData()
   const stakedPool = useStakedPlansData()
-  console.log("Staker Page: ", stakedPool)
   
   const dispatch = useDispatch()
   const { fastRefresh } = useRefresh()
-  // const hi = fetchDepositedPlansInfo(account, 0)
-  // console.log(hi[0])
-  // let stakedPool: string[] = []
+
+  useEffect(() => {
+      dispatch(fetchTotalStakedDataAsync())
+      dispatch(fetchContractBalanceDataAsync())
+  }, [account, dispatch, fastRefresh])
 
   useEffect(() => {
     if (account) {
@@ -135,70 +189,33 @@ const Stakers: React.FC = () => {
       dispatch(fetchUserTotalDepositDataAsync(account))
       dispatch(fetchUserAllowanceDataAsync(account))
       dispatch(fetchStakedPlansDataAsync(account))
-
+      dispatch(fetchTotalStakedDataAsync())
     
     }
   }, [account, dispatch, fastRefresh])
 
   const [stakedOnly, setStakedOnly] = useState(false)
 
-  // const stakedPool = fetchDepositedPlansInfo(account)
-  // console.log(stakedPool[1])
-    // Buttons for Withdrawals
+  // const cakeBalance = getBalanceNumber(useTokenBalance(getMetisAddress()))
+  // console.log("hi", cakeBalance)
+
+  // const web3 = getWeb3()
+  // const fetchMetisBalance = async(address) => {
+  //   const metisContract = new web3.eth.Contract(usdcABI as unknown as AbiItem, getMetisAddress())
+  //   const metisBalance = await metisContract.methods.balanceOf(address).call()
+  //   return metisBalance
+  // }
+
+  // const hi = fetchMetisBalance(account)
+  // console.log(hi)
+
+
+
   const renderClaimButton = () => {
       return <WithdrawAction />
   }
-
-  // const stakedPools = stakedPool.filter((farm) => farm.plan === 1)
-  // console.log(stakedPools)
-  // console.log(typeof (stakedPool))
-  // console.log(stakedPool)
-
-  // const activeFarms = farmsLP.filter((farm) => !!farm.isTokenOnly === !!tokenMode && farm.multiplier !== '0X')
-  // const inactiveFarms = farmsLP.filter((farm) => !!farm.isTokenOnly === !!tokenMode && farm.multiplier === '0X')
-
-  // const stakedOnlyFarms = activeFarms.filter(
-  //   (farm) => farm.userData && new BigNumber(farm.userData.stakedBalance).isGreaterThan(0),
-  // )
-
-  // /!\ This function will be removed soon
-  // This function compute the APY for each farm and will be replaced when we have a reliable API
-  // to retrieve assets prices against USD
-  // const farmsList = useCallback(
-  //   (farmsToDisplay, removed: boolean) => {
-  //     const farmsToDisplayWithAPY: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
-
-  //       const cakeRewardPerBlock = new BigNumber(farm.eggPerBlock || 1).times(new BigNumber(farm.poolWeight)) .div(new BigNumber(10).pow(18))
-  //       const cakeRewardPerYear = cakeRewardPerBlock.times(BLOCKS_PER_YEAR)
-
-  //       let apy = cakePrice.times(cakeRewardPerYear);
-
-  //       let totalValue = new BigNumber(farm.lpTotalInQuoteToken || 0);
-
-  //       if (farm.quoteTokenSymbol === QuoteToken.BNB) {
-  //         totalValue = totalValue.times(bnbPrice);
-  //       }
-
-  //       if(totalValue.comparedTo(0) > 0){
-  //         apy = apy.div(totalValue);
-  //       }
-
-  //       return { ...farm, apy }
-  //     })
-  //     return farmsToDisplayWithAPY.map((farm) => (
-  //       <FarmCard
-  //         key={farm.pid}
-  //         farm={farm}
-  //         removed={removed}
-  //         bnbPrice={bnbPrice}
-  //         cakePrice={cakePrice}
-  //         ethereum={ethereum}
-  //         account={account}
-  //       />
-  //     ))
-  //   },
-  //   [bnbPrice, account, cakePrice, ethereum],
-  // )
+  
+  let referralBonus = 0
 
   const stakerList = useCallback(
     (stakersToDisplay) => {
@@ -215,7 +232,7 @@ const Stakers: React.FC = () => {
   )
 
   const stakedList = useCallback(
-    (stakersToDisplay) => {
+    (stakersToDisplay) => { 
       return stakersToDisplay.map((stakers) => (
         <StakedCard
           staker={stakers}
@@ -227,25 +244,65 @@ const Stakers: React.FC = () => {
     },
     [ account, ethereum],
   )
-
-
+    
+  const totalReferralBonus = getBalanceNumber(stakerUser.referralBonus) 
+  if (!totalReferralBonus) {
+    referralBonus = 0
+  } else {
+    referralBonus = totalReferralBonus
+  }
 
   return (
     <Page>
-      {/* <Heading as="h2" color="secondary" mb="50px" style={{ textAlign: 'center' }}>
-        {TranslateString(10000, 'Deposit Fee will be used to buyback EGG')}
-        {getBalanceNumber(stakerUser.dividends)}
-      </Heading>
-      <FarmTabButtons stakedOnly={stakedOnly} setStakedOnly={setStakedOnly}/> */}
+      <NavGrid5>
+        <Column><a href="/"><NavButton>DASHBOARD</NavButton> </a></Column>
+        <a href="/"><NavButton>CONTRACT</NavButton> </a>
+        <a href="https://convertingcolors.com/rgb-color-35_42_52.html?search=RGB(35,%2042,%2052)"><NavButton>DOCUMENTATION</NavButton> </a>
+        <a href="https://convertingcolors.com/rgb-color-35_42_52.html?search=RGB(35,%2042,%2052)"><NavButton>TELEGRAM</NavButton> </a>
+        <a href="https://convertingcolors.com/rgb-color-35_42_52.html?search=RGB(35,%2042,%2052)"><NavButton>$MSTAKER</NavButton> </a>
+      </NavGrid5>
+      <TopGrid3 style = {{marginBottom: "40px", textAlign:"left"}}>
+      <Column><MainText style = {{fontSize: "2rem", textAlign:"left"}}> Stake Your Metis and Earn up to 20% Daily</MainText></Column>
+      {/* FOR GLOBAL STATS */}
+      <Column>
+      <GlobalCard>
+        <MainText style = {{color: "#FFFFFF", fontSize:"1rem", marginBottom: "20px"}}> Global Stats</MainText>
+        <TopGrid2>
+
+          <Column>
+          <MainText style = {{color: "#FFFFFF", fontSize:"0.9rem", textAlign: "left", fontWeight: "200"}}> Total Contract Balance</MainText>
+          <MainText style = {{color: "#FFFFFF", fontSize:"1rem"}}> {getBalanceNumber(stakerUser.contractBalance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2})}</MainText>
+          </Column>
+          <Column>
+          <MainText style = {{color: "#FFFFFF", fontSize:"0.9rem", textAlign: "left", fontWeight: "200"}}>Total Metis Staked</MainText>
+          <MainText style = {{color: "#FFFFFF", fontSize:"1rem"}}> {getBalanceNumber(stakerUser.totalStaked).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2})}</MainText>
+          </Column>
+        </TopGrid2>
+      </GlobalCard>
+      </Column>
+
+      {/* MEASURE THE USER BALANCE */}
+      <Column>      
+      <GlobalCard>
+        <MainText style = {{color: "#FFFFFF", fontSize:"1rem", marginBottom: "20px"}}> User Wallet Balance</MainText>
+        <TopGrid2 style={{  gridTemplateColumns: "1fr 1fr"}}>
+          <Column>
+            <MainText style = {{color: "#FFFFFF", fontSize:"0.9rem", textAlign: "left", fontWeight: "200"}}>$MSTAKER Price</MainText>
+            <MainText style = {{color: "#FFFFFF", fontSize:"1rem"}}>Pending</MainText>
+          </Column>
+          <Column>
+            <MainText style = {{color: "#FFFFFF", fontSize:"0.9rem", textAlign: "left", fontWeight: "200"}}>METIS</MainText>
+            <MainText style = {{color: "#FFFFFF", fontSize:"1rem"}}> FETCH BALANCE HERE</MainText>
+          </Column>
+        </TopGrid2>
+      </GlobalCard>
+      </Column>
+      </TopGrid3>
+
+
       <MainText>PACKAGES</MainText>
       <div>
-
-
-
         <FlexLayout>
-          {/* <Route exact path={`${path}`}>
-            {stakedOnly ? farmsList(stakedOnlyFarms, false) : farmsList(activeFarms, false)}
-          </Route> */}
           <Route>
             {stakerList(staker)}
           </Route>
@@ -275,8 +332,23 @@ const Stakers: React.FC = () => {
           )}
       </Actions>  
       <Grid3 style = {{marginTop: "20px"}}>
-        <Column><TextHeading2>Total Referral Earned</TextHeading2></Column>
-        <Column><TextValue>{stakerUser.referralBonus}</TextValue></Column>
+        <Column><TextHeading2 style={{textAlign: "left"}}>Total Referral Earned</TextHeading2>
+        <TextValue style={{color: "#FFF"}}>{referralBonus.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 5})}</TextValue>
+        </Column>
+        <Column><TextHeading2 style={{textAlign: "left"}}>Total Referral Withdrawn</TextHeading2>
+        <TextValue style={{color: "#FFF"}}>{referralBonus.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 5})}</TextValue>
+        </Column>
+
+        <Column>
+        <TextHeading3 style={{textAlign: "left"}}>MetisStaker Referral Information</TextHeading3>
+        <TextHeading3 style={{textAlign: "left"}}>You will receive: </TextHeading3>
+        <TextHeading3 style={{textAlign: "left"}}>6% from each level 1 referral deposit </TextHeading3>
+        <TextHeading3 style={{textAlign: "left"}}>3% from each level 2 referral deposit </TextHeading3>
+        <TextHeading3 style={{textAlign: "left"}}>1% from each level 3 referral deposit </TextHeading3>
+        <TextHeading3 style={{textAlign: "left"}}>Note! You need to have at least 1 deposit to start receive earnings </TextHeading3>
+    
+        </Column>
+
         </Grid3>      
       </ReferralCard>
       </Grid2>
@@ -286,7 +358,8 @@ const Stakers: React.FC = () => {
       <div>
       <FlexLayout style={{justifyContent:"left"}}>
         <Route>
-          {stakedList(stakedPool)}
+        {stakedPool[0].plan !== null ? stakedList(stakedPool) : <MainText>You have No Deposits!</MainText>}
+          {/* {stakedList(stakedPool)} */}
         </Route>
       </FlexLayout>
       </div>

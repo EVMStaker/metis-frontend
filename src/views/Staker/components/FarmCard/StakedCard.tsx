@@ -220,7 +220,6 @@ const StakedCard: React.FC<StakedCardProps> = ({ staker, currentPercentage, ethe
     // Calculate Time Left 
     daysLeft = parseInt(staker.finish.toString()) - Math.floor(Date.now() / 1000) 
     daysLeft = Math.floor(daysLeft/86400)
-    console.log(daysLeft)
   }
 
   

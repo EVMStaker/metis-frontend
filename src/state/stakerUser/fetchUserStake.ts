@@ -41,6 +41,13 @@ export const fetchReferalTotalBonus = async (account) => {
   return new BigNumber(totalReferralBonus)
 }
 
+// // Return the Total Amount of Referral Bonus Available for Claim  
+export const fetchReferralWithdrawn = async (account) => {
+  const totalReferralWithdrawn = await stakerContract.methods.getUserReferralWithdrawn(account).call()
+
+  return new BigNumber(totalReferralWithdrawn)
+}
+
 // // Return the Total Deposits that the User has
 export const fetchTotalDeposit = async (account) => {
   const totalDeposit = await stakerContract.methods.getUserTotalDeposits(account).call()
@@ -106,10 +113,3 @@ export const fetchDepositedPlansInfo2 = async (account, pid) => {
   const plans = stakerContract.methods.getUserDepositInfo(account, pid).call()
   console.log(plans)
 }
-fetchTotalStaked()
-
-// fetchDepositedPlansInfo2("0xb73E8cc008B4019b3AD5CA1e600235D405b20bA7", 1)
-
-// fetchDepositedPlansInfo("0xb73E8cc008B4019b3AD5CA1e600235D405b20bA7", 1)
-
-// fetchUserAllowance("0xb73E8cc008B4019b3AD5CA1e600235D405b20bA7")

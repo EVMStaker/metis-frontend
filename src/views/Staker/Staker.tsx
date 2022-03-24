@@ -6,6 +6,7 @@ import { getBalanceNumber } from 'utils/formatBalance'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { provider } from 'web3-core'
 import { Image, Heading, Card, Button} from '@pancakeswap-libs/uikit'
+import Countdown, { zeroPad } from 'react-countdown'
 import UnlockButton from 'components/UnlockButton'
 import { BLOCKS_PER_YEAR, CAKE_PER_BLOCK, CAKE_POOL_PID } from 'config'
 import styled, { keyframes } from 'styled-components'
@@ -25,7 +26,8 @@ import {
   fetchUserAllowanceDataAsync, 
   fetchStakedPlansDataAsync,
   fetchTotalStakedDataAsync,
-  fetchContractBalanceDataAsync} from 'state/actions'
+  fetchContractBalanceDataAsync,
+  fetchReferralWithdrawnDataAsync} from 'state/actions'
 import {fetchTotalStaked} from 'state/stakeruser/fetchUserStake'
 import { QuoteToken } from 'config/constants/types'
 import useI18n from 'hooks/useI18n'
@@ -100,7 +102,14 @@ const NavGrid5 = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   align-content: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
+  text-align: center;
+`
+const NavGrid6 = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  align-content: center;
+  margin-bottom: 30px;
   text-align: center;
 `
 
@@ -146,6 +155,70 @@ border-radius: 4px;
 }
 `
 
+const Hero2 = styled.div`
+  align-items: left;
+  background-repeat: no-repeat;
+  background-position: top center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: auto;
+  margin-bottom: 30px;
+  padding-top: 116px;
+  text-align: center;
+  height: 200px;
+  border-radius: 16px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+
+  ${({ theme }) => theme.mediaQueries.xs} {
+    background-image: url('/images/egg/everystaker.gif');
+    background-position: center;
+    height: 200px;
+    width: 100%;
+    padding-top: 0;
+    background-size: contain;
+    border-radius: 16px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    background-image: url('/images/egg/everystaker.gif');
+    background-position: center;
+    max-height: 100px;
+    width: 100%;
+    padding-top: 0;
+    background-size: contain;
+    border-radius: 16px;
+  }
+  
+  ${({ theme }) => theme.mediaQueries.lg} {
+    background-image: url('/images/egg/everystaker.gif');
+    background-position: center;
+    max-height: 200px;
+    width: 100%;
+    padding-top: 0;
+    background-size: contain;
+    border-radius: 16px;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+  }
+`
+
+const CountdownText = styled.span`
+  font-size: 2rem;
+  color: #000000;
+  border-radius: 5px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-text: center;
+  align-items: center;
+  margin-bottom: 30px;
+
+  ${({ theme }) => theme.mediaQueries.lg} {
+  }
+`
+
 const Actions = styled.div`
   margin-top: 24px;
 `
@@ -168,6 +241,16 @@ const Stakers: React.FC = () => {
     }
   }
 
+  const [countdownDate, setCountdownDate] = useState(1649080800000)
+  const CountdownTimeEnd = ({ days, hours, minutes, seconds, completed }) => {
+    return (
+        <CountdownText>
+           <Heading color="#000000" style={{fontSize:"2rem"}} mb="3px" >Start of Staking on Metis</Heading>
+            <span style={{ fontSize: '30px',  color: '#64ffda', fontWeight: 600 }}>{zeroPad(days)} : {zeroPad(hours)} : {zeroPad(minutes)} : {zeroPad(seconds)}</span>
+        </CountdownText>
+    )
+}
+
   const { account, ethereum }: { account: string; ethereum: provider } = useWallet()
   const stakerUser = useStakerUserData()
   const stakedPool = useStakedPlansData()
@@ -189,7 +272,7 @@ const Stakers: React.FC = () => {
       dispatch(fetchUserTotalDepositDataAsync(account))
       dispatch(fetchUserAllowanceDataAsync(account))
       dispatch(fetchStakedPlansDataAsync(account))
-      dispatch(fetchTotalStakedDataAsync())
+      dispatch(fetchReferralWithdrawnDataAsync(account))
     
     }
   }, [account, dispatch, fastRefresh])
@@ -216,6 +299,22 @@ const Stakers: React.FC = () => {
   }
   
   let referralBonus = 0
+  let referralWithdrawn = 0
+
+    
+  const totalReferralBonus = getBalanceNumber(stakerUser.referralBonus) 
+  if (!totalReferralBonus) {
+    referralBonus = 0
+  } else {
+    referralBonus = totalReferralBonus
+  }
+
+  const totalReferralWithdrawn = getBalanceNumber(stakerUser.referralWithdrawn) 
+  if (!totalReferralBonus) {
+    referralWithdrawn = 0
+  } else {
+    referralWithdrawn = totalReferralWithdrawn
+  }
 
   const stakerList = useCallback(
     (stakersToDisplay) => {
@@ -244,13 +343,7 @@ const Stakers: React.FC = () => {
     },
     [ account, ethereum],
   )
-    
-  const totalReferralBonus = getBalanceNumber(stakerUser.referralBonus) 
-  if (!totalReferralBonus) {
-    referralBonus = 0
-  } else {
-    referralBonus = totalReferralBonus
-  }
+
 
   return (
     <Page>
@@ -261,6 +354,20 @@ const Stakers: React.FC = () => {
         <a href="https://convertingcolors.com/rgb-color-35_42_52.html?search=RGB(35,%2042,%2052)"><NavButton>TELEGRAM</NavButton> </a>
         <a href="https://convertingcolors.com/rgb-color-35_42_52.html?search=RGB(35,%2042,%2052)"><NavButton>$MSTAKER</NavButton> </a>
       </NavGrid5>
+
+      <NavGrid6>
+        <a href="/"><NavButton >Fantom  <img src="images/egg/ftm.png" alt = "ftm" width={20} height={20} style={{marginLeft: "10px"}}/></NavButton> </a>
+        <a href="/"><NavButton >Avax  <img src="images/egg/avax.png" alt = "avax" width={20} height={20} style={{marginLeft: "10px"}}/></NavButton> </a>
+        <a href="/"><NavButton >Metis  <img src="images/egg/metis.png" alt = "metis" width={20} height={20} style={{marginLeft: "10px"}}/></NavButton> </a>
+        <a href="/"><NavButton >Cronos  <img src="images/egg/cro.png" alt = "cro" width={20} height={20} style={{marginLeft: "10px"}}/></NavButton> </a>
+        <a href="/"><NavButton >ETH  <img src="images/egg/eth.png" alt = "eth" width={20} height={20} style={{marginLeft: "10px"}}/></NavButton> </a>
+        <a href="/"><NavButton >BSC  <img src="images/egg/bnb.png" alt = "bnb" width={20} height={20} style={{marginLeft: "10px"}}/></NavButton> </a>
+
+      </NavGrid6>
+
+      <Hero2 />
+
+      <Countdown date={countdownDate} zeroPadTime={2} renderer={CountdownTimeEnd} />
       <TopGrid3 style = {{marginBottom: "40px", textAlign:"left"}}>
       <Column><MainText style = {{fontSize: "2rem", textAlign:"left"}}> Stake Your Metis and Earn up to 20% Daily</MainText></Column>
       {/* FOR GLOBAL STATS */}

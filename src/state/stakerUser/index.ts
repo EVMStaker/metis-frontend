@@ -11,6 +11,7 @@ import {
   fetchDepositedPlansInfo, 
   fetchTotalStaked,
   fetchContractBalance,
+  fetchReferralWithdrawn,
  } from './fetchUserStake'
 
 
@@ -65,6 +66,13 @@ export const StakerUserSlice = createSlice({
         contractBalance: action.payload,
       }
     },
+    setReferralWithdrawn: (state, action) => {
+      state.data = {
+        ...state.data,
+        referralWithdrawn: action.payload,
+      }
+    },
+    
     // setStakerUserData: (state, action) => {
     //   const { arrayOfUserDataObjects } = action.payload
     //   arrayOfUserDataObjects.forEach((userDataEl) => {
@@ -77,7 +85,7 @@ export const StakerUserSlice = createSlice({
 
 
 // Actions
-export const { setUserDividendsForClaim,  setUserPlanDeposited, setUserReferalTotalBonus, setUserTotalDeposit, setUserAllowance, setTotalStaked, setContractBalance} = StakerUserSlice.actions
+export const { setUserDividendsForClaim,  setReferralWithdrawn, setUserPlanDeposited, setUserReferalTotalBonus, setUserTotalDeposit, setUserAllowance, setTotalStaked, setContractBalance} = StakerUserSlice.actions
 // export const { setUserDividendsForClaim } = StakerUserSlice.actions
 
 
@@ -116,6 +124,12 @@ export const fetchContractBalanceDataAsync = () => async (dispatch) => {
   const data = await fetchContractBalance()
   dispatch(setContractBalance(data))
 }
+
+export const fetchReferralWithdrawnDataAsync = (account) => async (dispatch) => {
+  const data = await fetchReferralWithdrawn(account)
+  dispatch(setReferralWithdrawn(data))
+}
+
 
 export const fetchUserStakedDataAsync = (account) => async (dispatch) => {
   const data = await fetchPlanDeposited(account)

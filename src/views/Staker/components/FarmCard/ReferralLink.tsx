@@ -33,8 +33,8 @@ const ReferralLink = () => {
 
     return (
         <div>
-            <StyleInput type="text" scale="md" value={`https:/metisstaker.com/?ref=${rot13(account)}`} readOnly />
-            <CopyToClipboard text={`https://metisstaker.com/?ref=${rot13(account)}`} onCopy={() => { handleClick() }}>
+            <StyleInput type="text" scale="md" value={`https://metis.everystaker.com/?ref=${rot13(account)}`} readOnly />
+            <CopyToClipboard text={`https://metis.everystaker.com/?ref=${rot13(account)}`} onCopy={() => { handleClick() }}>
                 <Button variant="primary" style= {{border:"solid 3px #FFFFFF", marginLeft: "14px"}}mt="8px">Copy</Button>
             </CopyToClipboard>
             <ToastContainer toasts={toasts} onRemove={handleRemove} />

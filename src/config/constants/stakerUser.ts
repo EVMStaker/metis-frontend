@@ -9,6 +9,7 @@ const stakeruser: StakerUserConfig = {
     allowance: null,
     totalStaked: null,
     contractBalance: null,
+    referralWithdrawn: null,
     stakedData: {
       plan: null,
       percent: null,

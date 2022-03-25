@@ -1,5 +1,5 @@
-import BigNumber from 'bignumber.js'
 import { AbiItem } from 'web3-utils'
+import BigNumber from 'bignumber.js'
 import erc20ABI from 'config/abi/erc20.json'
 import multicall from 'utils/multicall'
 import stakerABI from 'config/abi/staker.json'
@@ -98,18 +98,18 @@ export const fetchContractBalance = async () => {
   return parsedBalance
 }
 
-export const fetchDepositedPlansInfo2 = async (account, pid) => {
+// export const fetchDepositedPlansInfo2 = async (account, pid) => {
   
-  // const length = await stakerContract.methods.getUserAmountOfDeposits(account).call()
-  // const allPlans: string[] = [];
-  // for (let i = 0; i < parseInt(length); i++) {
-  //   const promises =  stakerContract.methods.getUserDepositInfo(account, pid).call()
-  //   allPlans.push(promises)
-  // } 
-  // await Promise.all(plan)
+//   // const length = await stakerContract.methods.getUserAmountOfDeposits(account).call()
+//   // const allPlans: string[] = [];
+//   // for (let i = 0; i < parseInt(length); i++) {
+//   //   const promises =  stakerContract.methods.getUserDepositInfo(account, pid).call()
+//   //   allPlans.push(promises)
+//   // } 
+//   // await Promise.all(plan)
 
-  console.log("HI")
-  // [plan, percent, amount, profit, start, finish]
-  const plans = stakerContract.methods.getUserDepositInfo(account, pid).call()
-  console.log(plans)
-}
+//   console.log("HI")
+//   // [plan, percent, amount, profit, start, finish]
+//   const plans = stakerContract.methods.getUserDepositInfo(account, pid).call()
+//   console.log(plans)
+// }

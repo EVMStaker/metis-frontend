@@ -8,7 +8,6 @@ import {
   fetchReferalTotalBonus,
   fetchTotalDeposit, 
   fetchUserAllowance,
-  fetchDepositedPlansInfo, 
   fetchTotalStaked,
   fetchContractBalance,
   fetchReferralWithdrawn,
@@ -120,15 +119,5 @@ export const fetchReferralWithdrawnDataAsync = (account) => async (dispatch) => 
   dispatch(setReferralWithdrawn(data))
 }
 
-
-export const fetchUserStakedDataAsync = (account) => async (dispatch) => {
-  const data = await fetchPlanDeposited(account)
-
-  for (let i = 0; i < parseInt(data); i++) {
-    
-    const data = await fetchDepositedPlansInfo(account, i)
-    dispatch(setUserAllowance(data))
-  }
-}
 
 export default StakerUserSlice.reducer

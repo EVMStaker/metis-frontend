@@ -22,7 +22,6 @@ export {
   fetchUserReferalTotalBonusDataAsync,
   fetchUserTotalDepositDataAsync,
   fetchUserAllowanceDataAsync,
-  fetchUserStakedDataAsync,
   fetchTotalStakedDataAsync,
   fetchContractBalanceDataAsync,
   fetchReferralWithdrawnDataAsync, 

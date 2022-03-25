@@ -68,19 +68,6 @@ export const fetchUserAllowance = async (account) => {
   return parsedAllowance
 }
 
-export const fetchDepositedPlansInfo = async (account, pid) => {
-  
-  const length = await stakerContract.methods.getUserAmountOfDeposits(account).call()
-  const allPlans: string[] = [];
-  for (let i = 0; i < parseInt(length); i++) {
-    const promises =  stakerContract.methods.getUserDepositInfo(account, pid).call()
-    allPlans.push(promises)
-  } 
-  await Promise.all(allPlans)
-  // console.log(allPlans)
-  console.log("hi")
-  return allPlans
-}
 // Fetch the User Deposit Info for Each that they are
 export const fetchTotalStaked = async () => {
   const totalStaked = await multicall(stakerABI, [

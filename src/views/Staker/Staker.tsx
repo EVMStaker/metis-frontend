@@ -35,6 +35,7 @@ import stakeruser from 'config/constants/stakerUser'
 import { AbiItem } from 'web3-utils'
 import usdcABI from 'config/abi/usdc.json'
 import { getWeb3 } from 'utils/web3'
+import useTokenBalance from '../../hooks/useTokenBalance'
 import { getMetisAddress } from '../../utils/addressHelpers'
 import rot13 from '../../utils/encode'
 import { isAddress } from '../../utils/web3'
@@ -91,7 +92,28 @@ const TextHeading3 = styled(Heading)`
 `
 const Grid2 = styled.div`
   display: grid;
-  grid-template-columns: 1.1fr 2fr
+  grid-template-columns: 1.1fr 2fr;
+
+  ${({ theme }) => theme.mediaQueries.xs} {
+    & #earnings {
+      grid-column:  span 2;
+      margin-top: 20px;
+    }
+  }
+  
+  ${({ theme }) => theme.mediaQueries.sm} {
+    & #earnings {
+      grid-column:  span 2;
+      margin-top: 20px;
+    }
+  }
+
+
+  ${({ theme }) => theme.mediaQueries.lg} {
+    & #earnings {
+      grid-column: span 1;
+    }
+  }
 `
 const Grid3 = styled.div`
   display: grid;
@@ -104,6 +126,27 @@ const NavGrid5 = styled.div`
   align-content: center;
   margin-bottom: 30px;
   text-align: center;
+
+  ${({ theme }) => theme.mediaQueries.xs} {
+    & #include {
+      grid-column:  span 5;
+      margin-bottom: 10px;
+    }
+  }
+
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    & #include {
+      grid-column:  span 2;
+      margin-bottom: 10px;
+    }
+  }
+
+  ${({ theme }) => theme.mediaQueries.lg} {
+    & #include {
+      grid-column: span 1;
+    }
+  }
 `
 const NavGrid6 = styled.div`
   display: grid;
@@ -111,11 +154,51 @@ const NavGrid6 = styled.div`
   align-content: center;
   margin-bottom: 30px;
   text-align: center;
+
+  ${({ theme }) => theme.mediaQueries.xs} {
+    & #include {
+      grid-column:  span 3;
+      margin-bottom: 10px;
+    }
+  }
+
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    & #include {
+      grid-column:  span 3;
+      margin-bottom: 10px;
+    }
+  }
+
+  ${({ theme }) => theme.mediaQueries.lg} {
+    & #include {
+      grid-column: span 1;
+    }
+  }
 `
 
 const TopGrid3 = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    & #details {
+      grid-column:  span 3;
+      margin-bottom: 20px;
+    }
+  }
+  ${({ theme }) => theme.mediaQueries.xs} {
+    & #details {
+      grid-column:  span 3;
+      margin-bottom: 20px;
+    }
+  }
+
+  ${({ theme }) => theme.mediaQueries.lg} {
+    & #details {
+      grid-column: span 1;
+    }
+  }
 `
 const TopGrid2 = styled.div`
   display: grid;
@@ -241,7 +324,7 @@ const Stakers: React.FC = () => {
     }
   }
 
-  const [countdownDate, setCountdownDate] = useState(1649080800000)
+  const [countdownDate, setCountdownDate] = useState(1649253600000)
   const CountdownTimeEnd = ({ days, hours, minutes, seconds, completed }) => {
     return (
         <CountdownText>
@@ -279,20 +362,7 @@ const Stakers: React.FC = () => {
 
   const [stakedOnly, setStakedOnly] = useState(false)
 
-  // const cakeBalance = getBalanceNumber(useTokenBalance(getMetisAddress()))
-  // console.log("hi", cakeBalance)
-
-  // const web3 = getWeb3()
-  // const fetchMetisBalance = async(address) => {
-  //   const metisContract = new web3.eth.Contract(usdcABI as unknown as AbiItem, getMetisAddress())
-  //   const metisBalance = await metisContract.methods.balanceOf(address).call()
-  //   return metisBalance
-  // }
-
-  // const hi = fetchMetisBalance(account)
-  // console.log(hi)
-
-
+  const cakeBalance = getBalanceNumber(useTokenBalance(getMetisAddress()))
 
   const renderClaimButton = () => {
       return <WithdrawAction />
@@ -349,20 +419,20 @@ const Stakers: React.FC = () => {
   return (
     <Page>
       <NavGrid5>
-        <Column><a href="/"><NavButton>DASHBOARD</NavButton> </a></Column>
-        <a href="/"><NavButton>CONTRACT</NavButton> </a>
-        <a href="https://convertingcolors.com/rgb-color-35_42_52.html?search=RGB(35,%2042,%2052)"><NavButton>DOCUMENTATION</NavButton> </a>
-        <a href="https://convertingcolors.com/rgb-color-35_42_52.html?search=RGB(35,%2042,%2052)"><NavButton>TELEGRAM</NavButton> </a>
-        <a href="https://convertingcolors.com/rgb-color-35_42_52.html?search=RGB(35,%2042,%2052)"><NavButton>$MSTAKER</NavButton> </a>
+        <Column id="include"><a href="/"><NavButton>DASHBOARD</NavButton> </a></Column>
+        <Column id="include"><a href="https://andromeda-explorer.metis.io/address/0xCD31aFbC0346853b87b691684a5F69D94A375Ad0/contracts"><NavButton>CONTRACT</NavButton> </a></Column>
+        <Column id="include"><a href="https://linktr.ee/evm_staker"><NavButton>DOCS</NavButton> </a></Column>
+        <Column id="include"><a href="https://linktr.ee/evm_staker"><NavButton>DISCORD/TELEGRAM</NavButton> </a></Column>
+        <Column id="include"><a href="/"><NavButton>$MSTAKER</NavButton> </a></Column>
       </NavGrid5>
 
       <NavGrid6>
-        <a href="/"><NavButton >Fantom  <img src="images/egg/ftm.png" alt = "ftm" width={20} height={20} style={{marginLeft: "10px"}}/></NavButton> </a>
-        <a href="/"><NavButton >Avax  <img src="images/egg/avax.png" alt = "avax" width={20} height={20} style={{marginLeft: "10px"}}/></NavButton> </a>
-        <a href="/"><NavButton >Metis  <img src="images/egg/metis.png" alt = "metis" width={20} height={20} style={{marginLeft: "10px"}}/></NavButton> </a>
-        <a href="/"><NavButton >Cronos  <img src="images/egg/cro.png" alt = "cro" width={20} height={20} style={{marginLeft: "10px"}}/></NavButton> </a>
-        <a href="/"><NavButton >ETH  <img src="images/egg/eth.png" alt = "eth" width={20} height={20} style={{marginLeft: "10px"}}/></NavButton> </a>
-        <a href="/"><NavButton >BSC  <img src="images/egg/bnb.png" alt = "bnb" width={20} height={20} style={{marginLeft: "10px"}}/></NavButton> </a>
+      <Column id="include"><a href="https://fantom.evm-staker.com"><NavButton >Fantom  <img src="images/egg/ftm.png" alt = "ftm" width={20} height={20} style={{marginLeft: "10px"}}/></NavButton> </a></Column>
+      <Column id="include"><a href="https://avax.evm-staker.com"><NavButton >Avax  <img src="images/egg/avax.png" alt = "avax" width={20} height={20} style={{marginLeft: "10px"}}/></NavButton> </a></Column>
+      <Column id="include">  <a href="https://metis.evm-staker.com"><NavButton >Metis  <img src="images/egg/metis.png" alt = "metis" width={20} height={20} style={{marginLeft: "10px"}}/></NavButton> </a></Column>
+      <Column id="include"> <a href="https://cronos.evm-staker.com"><NavButton >Cronos  <img src="images/egg/cro.png" alt = "cro" width={20} height={20} style={{marginLeft: "10px"}}/></NavButton> </a></Column>
+      <Column id="include"> <a href="https://eth.evm-staker.com"><NavButton >ETH  <img src="images/egg/eth.png" alt = "eth" width={20} height={20} style={{marginLeft: "10px"}}/></NavButton> </a></Column>
+      <Column id="include"> <a href="https://bsc.evm-staker.com"><NavButton >BSC  <img src="images/egg/bnb.png" alt = "bnb" width={20} height={20} style={{marginLeft: "10px"}}/></NavButton> </a></Column>
 
       </NavGrid6>
 
@@ -370,10 +440,10 @@ const Stakers: React.FC = () => {
 
       <Countdown date={countdownDate} zeroPadTime={2} renderer={CountdownTimeEnd} />
       <TopGrid3 style = {{marginBottom: "40px", textAlign:"left"}}>
-      <Column><MainText style = {{fontSize: "2rem", textAlign:"left"}}> Stake Your Metis and Earn up to 20% Daily</MainText></Column>
-      {/* FOR GLOBAL STATS */}
-      <Column>
-      <GlobalCard>
+      <Column id="details"><MainText style = {{fontSize: "2rem", textAlign:"left"}}> Stake Your Metis and Earn up to 20% Daily</MainText></Column>
+
+      <Column  id="details">
+      <GlobalCard >
         <MainText style = {{color: "#FFFFFF", fontSize:"1rem", marginBottom: "20px"}}> Global Stats</MainText>
         <TopGrid2>
 
@@ -389,8 +459,8 @@ const Stakers: React.FC = () => {
       </GlobalCard>
       </Column>
 
-      {/* MEASURE THE USER BALANCE */}
-      <Column>      
+
+      <Column  id="details">      
       <GlobalCard>
         <MainText style = {{color: "#FFFFFF", fontSize:"1rem", marginBottom: "20px"}}> User Wallet Balance</MainText>
         <TopGrid2 style={{  gridTemplateColumns: "1fr 1fr"}}>
@@ -400,7 +470,7 @@ const Stakers: React.FC = () => {
           </Column>
           <Column>
             <MainText style = {{color: "#FFFFFF", fontSize:"0.9rem", textAlign: "left", fontWeight: "200"}}>METIS</MainText>
-            <MainText style = {{color: "#FFFFFF", fontSize:"1rem"}}> FETCH BALANCE HERE</MainText>
+            <MainText style = {{color: "#FFFFFF", fontSize:"1rem"}}>{cakeBalance.toFixed(2)}</MainText>
           </Column>
         </TopGrid2>
       </GlobalCard>
@@ -418,7 +488,7 @@ const Stakers: React.FC = () => {
       </div>
       <MainText style={{marginTop: "30px"}}>EARNINGS</MainText>
       <Grid2>
-      <EarningsCard>
+      <EarningsCard id = "earnings">
         <TextHeading>Total Metis Staked</TextHeading>
         <TextValue>{getBalanceNumber(stakerUser.totalDeposit)} Metis</TextValue>
 
@@ -427,7 +497,7 @@ const Stakers: React.FC = () => {
         
         {!account ? <UnlockButton mt="8px" fullWidth /> : renderClaimButton()}
       </EarningsCard>
-      <ReferralCard>
+      <ReferralCard id = "earnings">
         <TextHeading2>Your Referral Link</TextHeading2>
         <Actions>
         {account ? (

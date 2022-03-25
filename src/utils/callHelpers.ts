@@ -33,7 +33,6 @@ export const invest = async (stakerContract,  pid, amount, account) => {
     ref = "0x0000000000000000000000000000000000000000"
   }
 
-  console.log(ref, pid,  new BigNumber(amount).times(new BigNumber(10).pow(18)).toString() , account)
   return stakerContract.methods
     .invest(ref , pid)
     .send({ from: account, value: new BigNumber(amount).times(new BigNumber(10).pow(18)).toString() })

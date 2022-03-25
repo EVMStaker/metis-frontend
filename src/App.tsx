@@ -45,16 +45,16 @@ const App: React.FC = () => {
       <Menu>
         <Suspense fallback={<PageLoader />}>
           <Switch>
-            <Route path="/" exact>
+            {/* <Route path="/" exact>
               <Home />
             </Route>
             <Route path="/farms">
               <Farms />
-            </Route>
+            </Route> */}
             {/* <Route path="/nests">
               <Farms tokenMode/>
             </Route> */}
-            <Route path="/staker">
+            <Route path="/">
               <Staker />
             </Route>
             {/* <Route path="/pools"> */}

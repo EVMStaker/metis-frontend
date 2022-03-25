@@ -52,7 +52,6 @@ export const StakerUserSlice = createSlice({
       }
     },
     setTotalStaked: (state, action) => {
-      console.log(action.payload)
       state.data = {
         ...state.data,
         totalStaked: action.payload,

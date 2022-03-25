@@ -3,7 +3,7 @@ import farmsReducer from './farms'
 import poolsReducer from './pools'
 import stakersReducer from './staker'
 import stakeruserReducer from './stakeruser'
-import statedPlanReducer from './stakedPlans'
+import stakedPlanReducer from './stakedPlans'
 
 export default configureStore({
   devTools: process.env.NODE_ENV !== 'production',
@@ -12,6 +12,6 @@ export default configureStore({
     pools: poolsReducer,
     stakers: stakersReducer,
     stakeruser: stakeruserReducer,
-    stakedPlan: statedPlanReducer
+    stakedPlan: stakedPlanReducer
   },
 })

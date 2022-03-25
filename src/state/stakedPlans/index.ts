@@ -111,63 +111,9 @@ export const fetchStakedPlansDataAsync = (account) => async (dispatch) => {
   }
   
   await Promise.all(allPlans)
-
-  // for (let i = 0; i < parseInt(data); i++) {
-  //   allPlans = allPlans.concat(getDetails(account, i))
-  // }
-  // await Promise.all(allPlans)
-
-  // const betterPlan = []
-  // for (let i = 0; i < allPlans.length; i++) {
-  //   console.log(allPlans[i])
-  // }
-  // allPlans = await allPlans.concat(getDetails(account, 1))
-
-  // console.log("allPlans", allPlans)
-  // const yuallPlans  = await fetchDepositedPlansInfo(account,0)
-
-  // console.log("THUNKS")
-  // console.log("Single Plan", yuallPlans)
   await Promise.all(allPlans).then(result => (dispatch(setStakedPlanData(  result))))
 
 }
-
-// export const fetchStakedPlansDataAsync2 = (account) => async (dispatch) => {
-
-
-//   const mo = await fetchDepositedPlansInfo2(account)
-
-//   dispatch(setStakedPlanData(mo))
-// }
-
-
-
-// export const fetchUserDespositInfoDataAsync = (account) => async (dispatch) => {
-//   const data = await fetchDepositedPlansInfo(account, 1)
-//   return data
-// }
-
-// export const fetchUserStakedDataAsync = (account) => async (dispatch) => {
-//   const data = await fetchPlanDeposited(account)
-
-//   for (let i = 0; i < parseInt(data); i++) {
-    
-//     const mo = fetchDepositedPlansInfo(account, i)
-//     dispatch(setUserAllowance(mo))
-//   }
-
-//   const arrayOfUserDataObjects = userFarmAllowances.map((farmAllowance, index) => {
-//     return {
-//       index,
-//       allowance: userFarmAllowances[index],
-//       tokenBalance: userFarmTokenBalances[index],
-//       stakedBalance: userStakedBalances[index],
-//       earnings: userFarmEarnings[index],
-//     }
-//   })
-
-//   dispatch(setFarmUserData({ arrayOfUserDataObjects }))
-// }
 
 
 export default  StakedPlansSlice.reducer

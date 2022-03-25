@@ -14,7 +14,6 @@ import {
   fetchReferralWithdrawn,
  } from './fetchUserStake'
 
-
 const initialState: StakerUserState = { data: {...StakerUserConfig} }
 
 export const StakerUserSlice = createSlice({
@@ -72,21 +71,12 @@ export const StakerUserSlice = createSlice({
         referralWithdrawn: action.payload,
       }
     },
-    
-    // setStakerUserData: (state, action) => {
-    //   const { arrayOfUserDataObjects } = action.payload
-    //   arrayOfUserDataObjects.forEach((userDataEl) => {
-    //     const { index } = userDataEl
-    //     state.data.stakedData[index] = { ...userDataEl }
-    //   })
-    // },
   },
 })
 
 
 // Actions
 export const { setUserDividendsForClaim,  setReferralWithdrawn, setUserPlanDeposited, setUserReferalTotalBonus, setUserTotalDeposit, setUserAllowance, setTotalStaked, setContractBalance} = StakerUserSlice.actions
-// export const { setUserDividendsForClaim } = StakerUserSlice.actions
 
 
 // Thunks
@@ -141,5 +131,4 @@ export const fetchUserStakedDataAsync = (account) => async (dispatch) => {
   }
 }
 
-
-export default  StakerUserSlice.reducer
+export default StakerUserSlice.reducer

@@ -9,6 +9,10 @@ export {
 } from './pools'
 
 export {
+  fetchStakedPlansDataAsync
+} from './stakedPlans'
+
+export {
   fetchStakersPublicDataAsync,
 } from './staker'
 
@@ -23,9 +27,5 @@ export {
   fetchContractBalanceDataAsync,
   fetchReferralWithdrawnDataAsync, 
 } from './stakeruser'
-
-export {
-  fetchStakedPlansDataAsync
-} from './stakedPlans'
 
 

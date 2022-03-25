@@ -21,7 +21,7 @@ export {
   fetchUserStakedDataAsync,
   fetchTotalStakedDataAsync,
   fetchContractBalanceDataAsync,
-  fetchReferralWithdrawnDataAsync
+  fetchReferralWithdrawnDataAsync, 
 } from './stakeruser'
 
 export {

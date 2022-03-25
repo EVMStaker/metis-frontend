@@ -9,7 +9,7 @@ export {
 } from './pools'
 
 export {
-  fetchStakersPublicDataAsync
+  fetchStakersPublicDataAsync,
 } from './staker'
 
 export {

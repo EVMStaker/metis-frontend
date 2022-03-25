@@ -45,18 +45,18 @@ const App: React.FC = () => {
       <Menu>
         <Suspense fallback={<PageLoader />}>
           <Switch>
-            <Route path="/">
-              <Staker />
+            <Route path="/" exact>
+              <Home />
             </Route>
-            {/* <Route path="/farms">
+            <Route path="/farms">
               <Farms />
-            </Route> */}
+            </Route>
             {/* <Route path="/nests">
               <Farms tokenMode/>
             </Route> */}
-            {/* <Route path="/staker">
+            <Route path="/staker">
               <Staker />
-            </Route> */}
+            </Route>
             {/* <Route path="/pools"> */}
             {/*  <Pools /> */}
             {/* </Route> */}
@@ -66,7 +66,7 @@ const App: React.FC = () => {
             {/* <Route path="/ifo"> */}
             {/*  <Ifos /> */}
             {/* </Route> */}
-            {/* <Route path="/nft"> */}
+            {/* <Route path="/nft"> */}z``
             {/*  <Nft /> */}
             {/* </Route> */}
             {/* Redirect */}

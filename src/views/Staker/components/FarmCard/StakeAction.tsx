@@ -25,10 +25,10 @@ const IconButtonWrapper = styled.div`
 
 const StakeAction: React.FC<FarmCardActionsProps> = ({ tokenBalance, tokenName, pid, depositFeeBP}) => {
   const TranslateString = useI18n()
-  const { onStake } = useInvest(pid)
+  const { onInvest } = useInvest(pid)
   // const { onUnstake } = useUnstake(pid)
 
-  const [onPresentDeposit] = useModal(<DepositModal max={tokenBalance} onConfirm={onStake} tokenName={tokenName} depositFeeBP={120} />)
+  const [onPresentDeposit] = useModal(<DepositModal max={tokenBalance} onConfirm={onInvest} tokenName={tokenName} depositFeeBP={0} />)
 
   const renderStakingButtons = () => {
     return (

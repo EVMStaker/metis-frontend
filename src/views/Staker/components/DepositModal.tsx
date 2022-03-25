@@ -41,7 +41,7 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, 
         onChange={handleChange}
         max={fullBalance}
         symbol= "METIS"
-        depositFeeBP={1200}
+        depositFeeBP={0}
       />
       <ModalActions>
         <Button variant="secondary" onClick={onDismiss}>

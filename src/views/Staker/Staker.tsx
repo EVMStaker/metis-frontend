@@ -172,7 +172,7 @@ const Hero2 = styled.div`
   -moz-border-radius: 16px;
 
   ${({ theme }) => theme.mediaQueries.xs} {
-    background-image: url('/images/egg/everystaker.gif');
+    background-image: url('/images/egg/banner.gif');
     background-position: center;
     height: 200px;
     width: 100%;
@@ -182,7 +182,7 @@ const Hero2 = styled.div`
   }
 
   ${({ theme }) => theme.mediaQueries.sm} {
-    background-image: url('/images/egg/everystaker.gif');
+    background-image: url('/images/egg/banner.gif');
     background-position: center;
     max-height: 100px;
     width: 100%;
@@ -192,7 +192,7 @@ const Hero2 = styled.div`
   }
   
   ${({ theme }) => theme.mediaQueries.lg} {
-    background-image: url('/images/egg/everystaker.gif');
+    background-image: url('/images/egg/banner.gif');
     background-position: center;
     max-height: 200px;
     width: 100%;
@@ -321,13 +321,14 @@ const Stakers: React.FC = () => {
       return stakersToDisplay.map((stakers) => (
         <FarmCard
           staker={stakers}
+          stakerUser = {stakerUser}
           currentPercentage = {stakers.currentPercentage}
           ethereum={ethereum}
           account={account}
         />
       ))
     },
-    [ account, ethereum],
+    [ stakerUser, account, ethereum],
   )
 
   const stakedList = useCallback(

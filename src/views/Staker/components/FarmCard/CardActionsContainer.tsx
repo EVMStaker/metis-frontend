@@ -7,7 +7,7 @@ import { AbiItem } from 'web3-utils'
 import { getWeb3 } from 'utils/web3'
 import metisABI from 'config/abi/erc20.json'
 import { Button, Flex, Text } from '@pancakeswap-libs/uikit'
-import { Staker } from 'state/types'
+import { Staker, StakerUser } from 'state/types'
 import { useFarmFromPid, useFarmFromSymbol, useFarmUser } from 'state/hooks'
 import useI18n from 'hooks/useI18n'
 import UnlockButton from 'components/UnlockButton'
@@ -25,17 +25,18 @@ const Action = styled.div`
 
 interface FarmCardActionsProps {
   staker: Staker
+  stakerUser: StakerUser
   ethereum?: provider
   account?: string
 }
 
-const CardActions: React.FC<FarmCardActionsProps> = ({ staker, ethereum, account }) => {
+const CardActions: React.FC<FarmCardActionsProps> = ({ staker, stakerUser, ethereum, account }) => {
   const TranslateString = useI18n()
   const [requestedApproval, setRequestedApproval] = useState(false)
   const { pid, lpAddresses, tokenAddresses, isTokenOnly, depositFeeBP } = useFarmFromPid(staker.pid)
   const lpAddress = lpAddresses[process.env.REACT_APP_CHAIN_ID]
   const tokenAddress = tokenAddresses[process.env.REACT_APP_CHAIN_ID];
-  // const isApproved = account && allowance && allowance.isGreaterThan(0)
+  // const isApproved = account && stakerUser.allowance && stakerUser.allowance.isGreaterThan(0)
   const isApproved = true
 
   // Need to fetch the Token Balance of the User 

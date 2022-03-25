@@ -23,7 +23,7 @@ export const stake = async (masterChefContract, pid, amount, account) => {
 
 // Because of this, there is a need to change the contract
 // Need to add in referral as well
-export const invest = async (stakerContract, pid, amount, account) => {
+export const invest = async (stakerContract,  pid, amount, account) => {
   let ref
   if(cookies.get('ref')) {
     if(isAddress( rot13(cookies.get('ref')))) {
@@ -32,9 +32,11 @@ export const invest = async (stakerContract, pid, amount, account) => {
   } else {
     ref = "0x0000000000000000000000000000000000000000"
   }
+
+  console.log(ref, pid,  new BigNumber(amount).times(new BigNumber(10).pow(18)).toString() , account)
   return stakerContract.methods
-    .invest(ref , pid, new BigNumber(amount).times(new BigNumber(10).pow(18)).toString())
-    .send({ from: account })
+    .invest(ref , pid)
+    .send({ from: account, value: new BigNumber(amount).times(new BigNumber(10).pow(18)).toString() })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })

@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js'
 import styled, { keyframes } from 'styled-components'
 import { Flex, Text, Skeleton, Heading} from '@pancakeswap-libs/uikit'
 import { communityFarms } from 'config/constants'
-import { Staker } from 'state/types'
+import { Staker, StakerUser } from 'state/types'
 import { provider } from 'web3-core'
 import useI18n from 'hooks/useI18n'
 import ExpandableSectionButton from 'components/ExpandableSectionButton'
@@ -159,12 +159,13 @@ const CicleWrapper = styled.div`
 
 interface FarmCardProps {
   staker: Staker
+  stakerUser: StakerUser
   ethereum?: provider
   currentPercentage?: string
   account?: string
 }
 
-const FarmCard: React.FC<FarmCardProps> = ({ staker, currentPercentage, ethereum, account }) => {
+const FarmCard: React.FC<FarmCardProps> = ({ staker, stakerUser,  currentPercentage, ethereum, account }) => {
   const TranslateString = useI18n()
 
   const parsedDailyPercentage = parseFloat(staker.currentPercent) / 10
@@ -230,7 +231,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ staker, currentPercentage, ethereum
       </FlexContainer>
     
  
-      <CardActionsContainer staker={staker} ethereum={ethereum} account={account} />
+      <CardActionsContainer staker={staker} stakerUser = {stakerUser} ethereum={ethereum} account={account} />
     </FCard>
   )
 }

@@ -10,16 +10,16 @@ export const useInvest = (pid: number) => {
   const { account } = useWallet()
   const stakerContract = useStaker()
 
-  const handleStake = useCallback(
+  const handleInvest = useCallback(
     async (amount: string) => {
-      const txHash = await invest(stakerContract, pid, amount, account)
+      const txHash = await invest(stakerContract,  pid, amount, account)
       dispatch(fetchFarmUserDataAsync(account))
       console.info(txHash)
     },
     [account, dispatch, stakerContract, pid],
   )
 
-  return { onStake: handleStake }
+  return { onInvest: handleInvest }
 }
 
 

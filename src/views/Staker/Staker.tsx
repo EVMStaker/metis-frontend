@@ -28,7 +28,7 @@ import {
   fetchTotalStakedDataAsync,
   fetchContractBalanceDataAsync,
   fetchReferralWithdrawnDataAsync} from 'state/actions'
-import {fetchTotalStaked} from 'state/stakeruser/fetchUserStake'
+import {fetchTotalStaked} from 'state/stakerUser/fetchUserStake'
 import { QuoteToken } from 'config/constants/types'
 import useI18n from 'hooks/useI18n'
 import stakeruser from 'config/constants/stakerUser'

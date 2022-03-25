@@ -1835,9 +1835,9 @@
     eslint-plugin-react "^7.21.5"
     eslint-plugin-react-hooks "^4.0.0"
 
-"@pancakeswap-libs/uikit@metisstaker/metis-uikit":
+"@pancakeswap-libs/uikit@EVMStaker/metis-uikit":
   version "0.10.2"
-  resolved "https://codeload.github.com/metisstaker/metis-uikit/tar.gz/24dac0cdf6d9df467f3ad62aa437e0afe39fcc1c"
+  resolved "https://codeload.github.com/EVMStaker/metis-uikit/tar.gz/24dac0cdf6d9df467f3ad62aa437e0afe39fcc1c"
   dependencies:
     "@types/lodash" "^4.14.162"
     "@types/styled-system" "^5.1.10"

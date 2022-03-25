@@ -85,18 +85,3 @@ export const fetchContractBalance = async () => {
   return parsedBalance
 }
 
-// export const fetchDepositedPlansInfo2 = async (account, pid) => {
-  
-//   // const length = await stakerContract.methods.getUserAmountOfDeposits(account).call()
-//   // const allPlans: string[] = [];
-//   // for (let i = 0; i < parseInt(length); i++) {
-//   //   const promises =  stakerContract.methods.getUserDepositInfo(account, pid).call()
-//   //   allPlans.push(promises)
-//   // } 
-//   // await Promise.all(plan)
-
-//   console.log("HI")
-//   // [plan, percent, amount, profit, start, finish]
-//   const plans = stakerContract.methods.getUserDepositInfo(account, pid).call()
-//   console.log(plans)
-// }

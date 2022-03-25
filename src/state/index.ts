@@ -3,7 +3,7 @@ import farmsReducer from './farms'
 import poolsReducer from './pools'
 import stakedPlanReducer from './stakedPlans'
 import stakersReducer from './staker'
-import stakeruserReducer from './stakeruser'
+import stakeruserReducer from './stakerUser'
 
 
 export default configureStore({

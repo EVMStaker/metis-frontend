@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import StakedPlanConfig from 'config/constants/stakedPlans'
 import { StakedPlanState, StakedPlan} from '../types'
 import fetchDepositedPlansInfo from './fetchUserStakedPlans'
-import {fetchPlanDeposited} from '../stakeruser/fetchUserStake'
+import {fetchPlanDeposited} from '../stakerUser/fetchUserStake'
 
 
 const initialState: StakedPlanState = { data: [...StakedPlanConfig]}
